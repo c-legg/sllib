@@ -20,7 +20,7 @@ class stack;
 | 名称 | 类型 | 意义 |
 | :--: | :--: | :--: |
 | `car` | `T` | 栈顶元素 |
-| `cdr` | `stack<T>` | 栈顶元素以外的所有元素组成的栈 |
+| `cdr` | `*stack<T>` | 栈顶元素以外的所有元素组成的栈 |
 
 #### 成员函数
 
@@ -38,4 +38,4 @@ class stack;
 
 ``` cpp
 template<typename T>
-stack<T> cons(T add, stack<T> st);
+stack<T> cons(T add, stack<T>& st);
