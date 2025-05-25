@@ -1,7 +1,17 @@
 #ifndef SLLIB_PAIR_HPP
 #define SLLIB_PAIR_HPP
 
+#include "tools.hpp"
+
 namespace sllib {
+    template<typename T>
+    void swap(T &a, T &b) {
+        T tmp;
+        tmp=a;
+        a=b;
+        b=tmp;
+    }
+    
     template<typename T, long long len>
     class array {
         private:
@@ -9,7 +19,7 @@ namespace sllib {
         public:
             long long size() { return len; }
 
-            bool empty() { return len==0; }
+            bool empty() { return size()==0; }
 
             T& at(long long loc) {
                 if(loc>=len) exit(1);
@@ -21,23 +31,19 @@ namespace sllib {
                 arr[loc]=val;
             }
 
-            T front() { return arr[0]; }
+            T& front() { return arr[0]; }
 
-            T back() { return arr[len-1]; }
+            T& back() { return arr[len-1]; }
 
             void fill(T val) {
                 for(long long i(0); i<len; i++) arr[i]=val;
             }
 
-            template<long long lo>
-            void swap(array<T, lo> &oth) {
-                T *tmp=new T[lo];
-                for(long long i(0); i<lo; i++) tmp[i]=oth[i];
-                oth.arr=new T[len];
-                for(long long i(0); i<len; i++) oth.arr[i]=this->arr[i];
-                this->arr=new T[lo];
-                for(long long i(0); i<lo; i++) this->arr[i]=tmp[i];
-                delete tmp;
+            
+            void swap(array &oth) {
+                T *tmp(arr);
+                arr=oth.arr;
+                oth.arr=tmp;
             }
 
             array() {
@@ -45,14 +51,14 @@ namespace sllib {
                 arr=new T[len];
             }
 
-            template<long long lo>
-            array(const array<T, lo> &oth) {
-                if(lo>len) exit(0);
-                for(long long i(0); i<oth.size(); i++) arr[i]=oth.at(i);
-            }
-
             ~array() {
                 delete arr;
+            }
+
+            array& operator= (array &oth) {
+                if(this->size()!=oth.size()) exit(1);
+                for(long long i(0); i<len; i++) arr[i]=oth[i];
+                return *this;
             }
 
             T& operator[] (long long loc) {
