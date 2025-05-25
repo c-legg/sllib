@@ -4,14 +4,6 @@
 #include "tools.hpp"
 
 namespace sllib {
-    template<typename T>
-    void swap(T &a, T &b) {
-        T tmp;
-        tmp=a;
-        a=b;
-        b=tmp;
-    }
-    
     template<typename T, long long len>
     class array {
         private:
